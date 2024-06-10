@@ -6,7 +6,7 @@
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 
-trigger CalculMontant on Order (before insert, before update) {
+trigger CalculMontant on Order (before update) {
     for (Order order : trigger.new) {
         if (order.TotalAmount != null && order.ShipmentCost__c != null) {
             order.NetAmount__c = order.TotalAmount - order.ShipmentCost__c;
