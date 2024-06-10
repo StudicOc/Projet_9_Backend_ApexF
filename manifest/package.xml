@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>MyTeamOrdersController</members>
+        <members>UpdateAccounts</members>
+        <members>UpdateAllAccounts</members>
+        <members>testUpdateAccountCA</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>MyTeamOrders</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>CalculMontant</members>
+        <members>UpdateAccountCA</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>Account.Chiffre_d_affaire__c</members>
+        <members>Order.NetAmount__c</members>
+        <members>Order.ShipmentCost__c</members>
+        <name>CustomField</name>
+    </types>
+    <version>56.0</version>
+</Package>
