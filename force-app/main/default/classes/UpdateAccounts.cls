@@ -1,8 +1,18 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 06-11-2024
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 global class UpdateAccounts implements Database.Batchable<sObject>{
     
    global Database.QueryLocator start(Database.BatchableContext info){ 
        //Requeter seulement les comptes qui ont au moins une commande avec le Status 'Ordered'
-       return Database.getQueryLocator('SELECT Id FROM Account');
+       return Database.getQueryLocator(
+        [SELECT Id, (SELECT Id, Status FROM Orders WHERE Status = 'Ordered') 
+        FROM Account 
+        WHERE Id IN (SELECT AccountId FROM Order WHERE Status = 'Ordered')]);
 
    }
     
