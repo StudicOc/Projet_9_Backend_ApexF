@@ -1,27 +1,72 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 06-13-2024
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 @isTest
 private class testUpdateAccountCA {
-    @isTest static void test() {
-        Account acc1 = new Account(Name = 'Test Account 1');
-        insert acc1;
 
-        Product2 pd1 = new Product2(Name = 'Chemise Verte longue XYX', Family = 'Chemise');
-        Insert pd1;
- 
-        //Create the PricebookEntry
+    @isTest static void test() {
+
+        // Crée un compte de test
+        Account testAccount = new Account(
+            Name = 'Test Account'
+        );
+        insert testAccount; 
+
+        // Crée un produit de test
+        Product2 pd1 = new Product2(
+            Name = 'Chemise Verte longue XYX',
+            Family = 'Chemise'
+        );
+        insert pd1;
+
+        // Crée l'entrée de catalogue de prix (PricebookEntry)
         PricebookEntry pbe = new PricebookEntry(
             Pricebook2Id = Test.getStandardPricebookId(),
             Product2Id = pd1.Id,
             UnitPrice = 1020,
             IsActive = true
         );
-        Insert pbe;
 
-        Order o1 = new Order(AccountId = acc1.Id);
-        insert o1;
+        insert pbe;
 
-        OrderItem oi1 = new OrderItem (OrderId = o1.Id, PricebookEntryId = pbe.Id, Quantity=10, UnitPrice = 150);
-        insert oi1;
-        OrderItem oi2 = new OrderItem (OrderId = o1.Id, PricebookEntryId = pbe.Id, Quantity=20, UnitPrice = 1000);
-        insert oi2;        
+        // Crée un ordre de test en utilisant le Price Book de test
+        Order testOrder1 = new Order(
+            Name = 'Test Order',
+            AccountId = testAccount.Id,
+            Status = 'Draft', // Statut correct pour un nouvel ordre
+            Pricebook2Id = Test.getStandardPricebookId(),
+            EffectiveDate = Date.today()
+        );
+        insert testOrder1;
+
+        // Crée des OrderItems de test
+        OrderItem orderItem1 = new OrderItem(
+            OrderId = testOrder.Id,
+            PricebookEntryId = pbe.Id,
+            Quantity = 10,
+            UnitPrice = 150
+        );
+        insert orderItem1;
+
+        OrderItem orderItem2 = new OrderItem(
+            OrderId = testOrder.Id,
+            PricebookEntryId = pbe.Id,
+            Quantity = 20,
+            UnitPrice = 1000
+        );
+        insert orderItem2;  
+
+        Test.startTest();
+
+        // Ajout d'une vérification pour le compte
+        Account retrievedAccount = [SELECT Id FROM Account WHERE Id = :testAccount.Id];
+        System.assertNotEquals(null, retrievedAccount);
+
+        
+        Test.stopTest();
     }
 }

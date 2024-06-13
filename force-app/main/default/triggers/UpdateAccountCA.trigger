@@ -2,7 +2,7 @@
  * @description       : Update Account revenue (Chiffre_d_affaire__c) based on Order updates
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 06-11-2024
+ * @last modified on  : 06-12-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 trigger UpdateAccountCA on Order (after update) {
@@ -14,12 +14,10 @@ trigger UpdateAccountCA on Order (after update) {
       }
   }
   if (!accountIds.isEmpty()) {
-      //Carte pour contenir les revenus totaux de chaque compte
       Map<Id, Decimal> accountAmount = new Map<Id, Decimal>();
-
       // SOQL orders pour calculers les revenus totaux de chaque compte
       for (AggregateResult ordersSum : [
-          SELECT  AccountId, SUM(TotalAmount) totalRevenue // Variable d'identification//
+          SELECT  AccountId,Status, SUM(TotalAmount) totalRevenue 
           FROM Order
           WHERE Status = 'Ordered' AND AccountId IN :accountIds
           GROUP BY AccountId
