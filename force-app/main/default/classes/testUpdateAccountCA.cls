@@ -30,7 +30,6 @@ private class testUpdateAccountCA {
             UnitPrice = 1020,
             IsActive = true
         );
-
         insert pbe;
 
         // Crée un ordre de test en utilisant le Price Book de test
@@ -45,7 +44,7 @@ private class testUpdateAccountCA {
 
         // Crée des OrderItems de test
         OrderItem orderItem1 = new OrderItem(
-            OrderId = testOrder.Id,
+            OrderId = testOrder1.Id,
             PricebookEntryId = pbe.Id,
             Quantity = 10,
             UnitPrice = 150
@@ -53,7 +52,7 @@ private class testUpdateAccountCA {
         insert orderItem1;
 
         OrderItem orderItem2 = new OrderItem(
-            OrderId = testOrder.Id,
+            OrderId = testOrder1.Id,
             PricebookEntryId = pbe.Id,
             Quantity = 20,
             UnitPrice = 1000
@@ -62,11 +61,18 @@ private class testUpdateAccountCA {
 
         Test.startTest();
 
-        // Ajout d'une vérification pour le compte
-        Account retrievedAccount = [SELECT Id FROM Account WHERE Id = :testAccount.Id];
-        System.assertNotEquals(null, retrievedAccount);
+        // Mise à jour de l'ordre pour déclencher le trigger
+        testOrder1.Status = 'Ordered';
+        update testOrder1;
 
+        // Calcule le chiffre d'affaires attendu
+        Decimal expectedRevenue = (orderItem1.Quantity * orderItem1.UnitPrice) + (orderItem2.Quantity * orderItem2.UnitPrice);
         
+        // Ajout d'une vérification pour le compte
+        Account updatedAccount = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount.Id];
+        System.assertNotEquals(null, updatedAccount);
+        System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c);
+
         Test.stopTest();
     }
 }

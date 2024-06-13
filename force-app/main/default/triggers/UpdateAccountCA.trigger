@@ -2,7 +2,7 @@
  * @description       : Update Account revenue (Chiffre_d_affaire__c) based on Order updates
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 06-12-2024
+ * @last modified on  : 06-13-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 trigger UpdateAccountCA on Order (after update) {
@@ -23,6 +23,7 @@ trigger UpdateAccountCA on Order (after update) {
           GROUP BY AccountId
       ]) {
         accountAmount.put((Id)ordersSum.get('AccountId'), (Decimal)ordersSum.get('totalRevenue'));
+        System.debug('totalRevnue');
       }
 
       // Fetch related accounts and update their revenue
