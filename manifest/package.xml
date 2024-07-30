@@ -4,7 +4,7 @@
         <members>MyTeamOrdersController</members>
         <members>UpdateAccounts</members>
         <members>UpdateAllAccounts</members>
-        <members>testUpdateAccountCA</members>
+        <members>TestUpdateAccountCA</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -12,7 +12,7 @@
         <name>ApexPage</name>
     </types>
     <types>
-        <members>CalculMontant</members>
+        <members>CalculateAmount</members>
         <members>UpdateAccountCA</members>
         <name>ApexTrigger</name>
     </types>

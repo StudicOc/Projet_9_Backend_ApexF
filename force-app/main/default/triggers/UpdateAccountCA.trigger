@@ -1,41 +1,29 @@
 /**
- * @description       : Update Account revenue (Chiffre_d_affaire__c) based on Order updates
+ * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 06-13-2024
+ * @last modified on  : 07-30-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
+
+// Mettre à jour le chiffre d'affaires (Chiffre_d_affaire__c) sur les comptes après la mise à jour des commandes
+
 trigger UpdateAccountCA on Order (after update) {
-  Set<Id> accountIds = new Set<Id>();
 
-  for (Order newOrder : trigger.new) {      
-      if (newOrder.AccountId != null) {
-          accountIds.add(newOrder.AccountId);
-      }
-  }
-  if (!accountIds.isEmpty()) {
-      Map<Id, Decimal> accountAmount = new Map<Id, Decimal>();
-      // SOQL orders pour calculers les revenus totaux de chaque compte
-      for (AggregateResult ordersSum : [
-          SELECT  AccountId,Status, SUM(TotalAmount) totalRevenue 
-          FROM Order
-          WHERE Status = 'Ordered' AND AccountId IN :accountIds
-          GROUP BY AccountId
-      ]) {
-        accountAmount.put((Id)ordersSum.get('AccountId'), (Decimal)ordersSum.get('totalRevenue'));
-        System.debug('totalRevnue');
-      }
+    Set<Id> accountIds = new Set<Id>();
 
-      // Fetch related accounts and update their revenue
-      List<Account> accountsToUpdate = new List<Account>();
-      for (Id accountId : accountAmount.keySet()) {
-          Account acc = new Account(Id = accountId);
-          acc.Chiffre_d_affaire__c = accountAmount.get(accountId);
-          accountsToUpdate.add(acc);
-      }
-
-      if (!accountsToUpdate.isEmpty()) {
-          update accountsToUpdate;
-      }
-  }
+    // Collecter les IDs de comptes concernés
+    for (Order newOrder : trigger.new) {      
+        if (newOrder.AccountId != null) {
+            accountIds.add(newOrder.AccountId);
+        }
+    }
+    
+    // Appeler la méthode du service pour mettre à jour les revenus du compte
+    AccountRevenueService.updateAccountRevenue(accountIds);
 }
+
+  
+  /*la collecte des IDs de comptes (Set<Id> accountIds = new Set<Id>(); 
+  et la boucle for (Order newOrder : trigger.new) { ... }) 
+  et l'utilisation de la requête agrégée (for (AggregateResult ordersSum : [ ... ])) sont les parties où les collections sont utilisées pour minimiser les requêtes SOQL*/

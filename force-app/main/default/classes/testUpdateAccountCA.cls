@@ -2,11 +2,11 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 06-13-2024
+ * @last modified on  : 07-30-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 @isTest
-private class testUpdateAccountCA {
+private class TestUpdateAccountCA {
 
     @isTest static void test() {
 
@@ -69,9 +69,13 @@ private class testUpdateAccountCA {
         Decimal expectedRevenue = (orderItem1.Quantity * orderItem1.UnitPrice) + (orderItem2.Quantity * orderItem2.UnitPrice);
         
         // Ajout d'une vérification pour le compte
-        Account updatedAccount = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount.Id];
-        System.assertNotEquals(null, updatedAccount);
-        System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c);
+        List<Account> updatedAccounts = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount.Id];
+        
+        // Vérifie que la liste n'est pas vide
+        System.assert(!updatedAccounts.isEmpty(), 'La liste des comptes mis à jour ne doit pas être vide.');
+
+        Account updatedAccount = updatedAccounts[0];
+        System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c, 'Le chiffre d\'affaires calculé doit correspondre.');
 
         Test.stopTest();
     }
