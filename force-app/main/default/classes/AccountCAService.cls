@@ -19,6 +19,24 @@ public with sharing class AccountCAService {
         if (accountIds.isEmpty()) {
             return;
         }
+
+          // Filter accounts that have more than 100 orders
+          Map<Id, Integer> accountOrderCounts = new Map<Id, Integer>();
+          for (AggregateResult result : [
+              SELECT AccountId, COUNT(Id) orderCount
+              FROM Order
+              WHERE AccountId IN :accountIds
+              GROUP BY AccountId
+          ]) {
+              Integer orderCount = (Integer)result.get('orderCount');
+              if (orderCount > 100) {
+                  accountOrderCounts.put((Id)result.get('AccountId'), orderCount);
+              }
+          }
+  
+          if (accountOrderCounts.isEmpty()) {
+              return;
+          }
         
         Map<Id, Decimal> accountAmount = new Map<Id, Decimal>();
 
@@ -28,7 +46,12 @@ public with sharing class AccountCAService {
             FROM Order
             WHERE Status = 'Ordered' AND AccountId IN :accountIds
             GROUP BY AccountId
-        ]) {
+        ]) 
+        
+        
+        
+        
+        {
             accountAmount.put((Id)ordersSum.get('AccountId'), (Decimal)ordersSum.get('totalRevenue'));
         }
 
