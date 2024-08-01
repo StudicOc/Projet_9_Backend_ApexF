@@ -3,7 +3,6 @@
     <types>
         <members>MyTeamOrdersController</members>
         <members>UpdateAccounts</members>
-        <members>UpdateAllAccounts</members>
         <members>TestUpdateAccountCA</members>
         <name>ApexClass</name>
     </types>
