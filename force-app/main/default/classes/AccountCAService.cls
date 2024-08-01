@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 07-30-2024
+ * @last modified on  : 08-01-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 
@@ -10,14 +10,21 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 07-30-2024
+ * @last modified on  : 08-01-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class AccountCAService {
-    public AccountCAService(Set<Id> accountIds) {
-
+    public static void processOrdersUpdateAccount(List<Order> orders) {
+        Set<Id> accountIds = new Set<Id>();
         
-        if (accountIds == null || accountIds.isEmpty()) {
+        // Collect account IDs from the provided orders
+        for (Order ord : orders) {
+            if (ord.AccountId != null) {
+                accountIds.add(ord.AccountId);
+            }
+        }
+        
+        if (accountIds.isEmpty()) {
             return;
         }
         
@@ -49,6 +56,9 @@ public with sharing class AccountCAService {
 
 
     }
+
+	public static void AccountCAService(List<Order> l){
+	} 
 }
 
 

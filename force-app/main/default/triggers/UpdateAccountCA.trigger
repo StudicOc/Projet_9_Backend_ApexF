@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 07-30-2024
+ * @last modified on  : 08-01-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 
@@ -20,7 +20,7 @@ trigger UpdateAccountCA on Order (after update) {
     }
     
     // Appeler la méthode du service pour mettre à jour les revenus du compte
-    AccountRevenueService.updateAccountRevenue(accountIds);
+    AccountCAService.AccountCAService(Trigger.new);
 }
 
   
