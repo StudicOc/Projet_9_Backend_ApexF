@@ -20,7 +20,7 @@ trigger UpdateAccountCA on Order (after update) {
     }
     
     // Appeler la méthode du service pour mettre à jour les revenus du compte
-    AccountCAService.AccountCAService(Trigger.new);
+    AccountCAService.processOrdersUpdateAccount(Trigger.new);
 }
 
   
