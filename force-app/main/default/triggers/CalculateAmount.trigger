@@ -5,7 +5,7 @@
  * @last modified on  : 08-01-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
-trigger CalcultateAmount on Order (before update) {
+trigger CalculateAmount on Order (before update) {
     new OrderNetAmountService(Trigger.new);
 }
 
