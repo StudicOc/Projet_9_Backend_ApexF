@@ -5,14 +5,6 @@
  * @last modified on  : 08-01-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
-
-/**
- * @description       : 
- * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
- * @group             : 
- * @last modified on  : 08-01-2024
- * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
-**/
 public with sharing class AccountCAService {
     public static void processOrdersUpdateAccount(List<Order> orders) {
         Set<Id> accountIds = new Set<Id>();
@@ -30,7 +22,7 @@ public with sharing class AccountCAService {
         
         Map<Id, Decimal> accountAmount = new Map<Id, Decimal>();
 
-        // Calculer les revenus totaux pour chaque compte avec une requête agrégée
+        // Calculate the total revenue for each account with an aggregate query
         for (AggregateResult ordersSum : [
             SELECT AccountId, SUM(TotalAmount) totalRevenue 
             FROM Order
@@ -40,7 +32,7 @@ public with sharing class AccountCAService {
             accountAmount.put((Id)ordersSum.get('AccountId'), (Decimal)ordersSum.get('totalRevenue'));
         }
 
-        // Préparer la liste des comptes à mettre à jour
+        // Prepare the list of accounts to update
         List<Account> accountsToUpdate = new List<Account>();
         for (Id accountId : accountAmount.keySet()) {
             Account acc = new Account(Id = accountId);
@@ -48,18 +40,9 @@ public with sharing class AccountCAService {
             accountsToUpdate.add(acc);
         }
 
-        // Mettre à jour les comptes si nécessaire
+        // Update the accounts if necessary
         if (!accountsToUpdate.isEmpty()) {
             update accountsToUpdate;
         }
-
-
-
     }
-
-	public static void AccountCAService(List<Order> l){
-	} 
 }
-
-
-    

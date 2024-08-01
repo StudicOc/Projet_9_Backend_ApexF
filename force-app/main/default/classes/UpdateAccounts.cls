@@ -4,32 +4,32 @@
  * @group             : 
  * @last modified on  : 08-01-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
- * 
- * 
 **/
-
-//réalisation et lancement d’un batch, mettant à jour le chiffre d’affaires de tous les comptes lors de la migration des données ;
 global class UpdateAccounts implements Database.Batchable<sObject>{
     
     global Database.QueryLocator start(Database.BatchableContext info){ 
-        //Requeter seulement les comptes qui ont au moins une commande avec le Status 'Ordered'
+        // Query only the accounts that have at least one order with the Status 'Ordered'
         return Database.getQueryLocator(
-         [SELECT Id, (SELECT Id, Status FROM Orders WHERE Status = 'Ordered') 
+         [SELECT Id, (SELECT Id, Status, TotalAmount FROM Orders WHERE Status = 'Ordered') 
          FROM Account 
          WHERE Id IN (SELECT AccountId FROM Order WHERE Status = 'Ordered')]);
- 
     }
      
     global void execute(Database.BatchableContext info, List<Account> scope){   
-     Set<Id> accountIds = new Set<Id>();
+        List<Order> orders = new List<Order>();
          
-     // Collecter les IDs des comptes dans le scope
-     for (Account acc : scope) {
-         accountIds.add(acc.Id);
-     }
+        // Collect orders from the accounts in the scope
+        for (Account acc : scope) {
+            for (Order ord : acc.Orders) {
+                if (ord.Status == 'Ordered') {
+                    orders.add(ord);
+                }
+            }
+        }
  
-     AccountCAService.AccountCAService(Trigger.new);
+        AccountCAService.processOrdersUpdateAccount(orders);
     }    
     global void finish(Database.BatchableContext info){
+        // Any post-processing logic can go here
     } 
- }
+}
