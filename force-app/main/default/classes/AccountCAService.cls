@@ -9,7 +9,7 @@ public with sharing class AccountCAService {
     public static void processOrdersUpdateAccount(List<Order> orders) {
         Set<Id> accountIds = new Set<Id>();
         
-        // Collect account IDs from the provided orders
+// Collecte les identifiants de compte des commandes asssociés
         for (Order ord : orders) {
             if (ord.AccountId != null) {
                 accountIds.add(ord.AccountId);
@@ -19,8 +19,7 @@ public with sharing class AccountCAService {
         if (accountIds.isEmpty()) {
             return;
         }
-
-          // Filter accounts that have more than 100 orders
+// Filtre les comptes ayant plus de 100 commandes
           Map<Id, Integer> accountOrderCounts = new Map<Id, Integer>();
           for (AggregateResult result : [
               SELECT AccountId, COUNT(Id) orderCount
@@ -40,7 +39,7 @@ public with sharing class AccountCAService {
         
         Map<Id, Decimal> accountAmount = new Map<Id, Decimal>();
 
-        // Calculate the total revenue for each account with an aggregate query
+ // Calcule du revenu total de chaque compte 
         for (AggregateResult ordersSum : [
             SELECT AccountId, SUM(TotalAmount) totalRevenue 
             FROM Order
@@ -48,14 +47,11 @@ public with sharing class AccountCAService {
             GROUP BY AccountId
         ]) 
         
-        
-        
-        
         {
             accountAmount.put((Id)ordersSum.get('AccountId'), (Decimal)ordersSum.get('totalRevenue'));
         }
 
-        // Prepare the list of accounts to update
+        // Liste des comptes à mettre à jour
         List<Account> accountsToUpdate = new List<Account>();
         for (Id accountId : accountAmount.keySet()) {
             Account acc = new Account(Id = accountId);
@@ -63,7 +59,8 @@ public with sharing class AccountCAService {
             accountsToUpdate.add(acc);
         }
 
-        // Update the accounts if necessary
+        // Update dans la BDD
+        
         if (!accountsToUpdate.isEmpty()) {
             update accountsToUpdate;
         }

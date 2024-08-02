@@ -6,8 +6,7 @@
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class OrderNetAmountService {
-    
-    // Constructor
+     
     public OrderNetAmountService(List<Order> orders) {
         if (orders == null || orders.isEmpty()) {
             return;
