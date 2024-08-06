@@ -1,8 +1,15 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 08-06-2024
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 @isTest
 private class TestUpdateAccountCA {
 
     @isTest static void test() {
-        // Creation de data
+        // Create test data
         Account testAccount = TestDataFactory.createAccount('Account 1');
         Product2 testProduct = TestDataFactory.createProduct2('Produit 1');
         PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);
@@ -12,20 +19,17 @@ private class TestUpdateAccountCA {
 
         Test.startTest();
 
-        // Mise à jour de l'ordre pour déclencher le déclencheur
+        // Update the order status
         testOrder.Status = 'Ordered';
         update testOrder;
 
         Test.stopTest();
 
-        // Calculate expected revenue
+        // Calculate expected total revenue
         Decimal expectedRevenue = (testOrderItem1.Quantity * testOrderItem1.UnitPrice) + (testOrderItem2.Quantity * testOrderItem2.UnitPrice);
 
-        // Vérifier le compte
+        // ASSERT
         Account updatedAccount = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount.Id LIMIT 1];
-
-        // Asserts
-        System.assertNotEquals(null, testAccount.Id, 'Account ID should not be null');
-        System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c, 'The calculated revenue should match.');
+        System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c, 'The account revenue should be updated correctly.');
     }
 }
