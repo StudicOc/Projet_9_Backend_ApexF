@@ -61,8 +61,6 @@ public with sharing class TestDataFactory {
             Name = 'Test Order',
             AccountId = accountId,
             Status = 'Draft',
-            TotalAmount=100,
-            ShipmentCost__c=20,
             Pricebook2Id = Test.getStandardPricebookId(),
             EffectiveDate = Date.today()
         );

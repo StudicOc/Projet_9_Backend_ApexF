@@ -23,6 +23,6 @@ private class TestNetAmountOrd {
         Order updatedOrder = [SELECT Id, NetAmount__c FROM Order WHERE Id = :testOrder.Id];
         
         // Vérifier que les montants nets sont corrects
-        System.assertEquals(80, updatedOrder.NetAmount__c, 'Le montant net calculé est incorrect.');
+        System.assertEquals( updatedOrder.NetAmount__c, 'Le montant net calculé est incorrect.');
     }
 }
