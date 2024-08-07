@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 08-06-2024
+ * @last modified on  : 08-07-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class TestDataFactory {
@@ -11,31 +11,28 @@ public with sharing class TestDataFactory {
         Account acc = new Account(Name = name);
         insert acc;
         return acc;
-        
     }
-    
-    public static Account createAccountWithMultipleOrders (Integer numberOfOrders){
 
+    public static Account createAccountWithMultipleOrders(Integer numberOfOrders) {
         Account accs = new Account(Name = 'Test Account 2');
         insert accs;
 
         List<Order> orders = new List<Order>();
 
-           for (Integer i = 0; i < numberOfOrders; i++) {
-               Order order = new Order(
+        for (Integer i = 0; i < numberOfOrders; i++) {
+            Order order = new Order(
                 AccountId = accs.Id,
                 Status = 'Draft',
                 Pricebook2Id = Test.getStandardPricebookId(),
                 EffectiveDate = Date.today(),
                 Name = 'Test Order ' + i
-               );
-               orders.add(order);
-           }
-           
-           // Insère toutes les commandes
-           insert orders;
-           return accs;
+            );
+            orders.add(order);
+        }
 
+        // Insert all orders
+        insert orders;
+        return accs;
     }
 
     public static Product2 createProduct2(String name) {
@@ -63,12 +60,16 @@ public with sharing class TestDataFactory {
             Name = 'Test Order',
             AccountId = accountId,
             Status = 'Draft',
+            TotalAmount=100,
+            ShipmentCost__c=20,
             Pricebook2Id = Test.getStandardPricebookId(),
             EffectiveDate = Date.today()
         );
         insert testOrder;
         return testOrder;
     }
+
+   
 
     public static OrderItem createOrderItem(Id orderId, Id pricebookEntryId, Integer quantity, Decimal unitPrice) {
         OrderItem orderItem = new OrderItem(

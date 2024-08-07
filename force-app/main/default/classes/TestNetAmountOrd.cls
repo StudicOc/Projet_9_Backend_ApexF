@@ -1,42 +1,28 @@
 /**
- * @description       : Unit test for verifying the NetAmount calculation on Order.
- * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
- * @group             : 
- * @last modified on  : 08-06-2024
- * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @description       : Test class for OrderNetAmountService
 **/
-
 @isTest
 private class TestNetAmountOrd {
 
     @isTest
     static void testNetAmountCalculation() {
-        // Setup test data
+        // Setup test data 
         Account testAccount = TestDataFactory.createAccount('Account 1');
-        Product2 testProduct = TestDataFactory.createProduct2('Product 1');
-        PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);
-        OrderItem testOrderItem1 = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 15, 150);
-       
-        Test.startTest();
-
-        testOrder.Status = 'Ordered';
+        
+        // Mettre à jour le statut de la commande 
+        testOrder.Status = 'Ordered'; 
         update testOrder;
-    
+        
+        // Appeler la méthode de la classe 
+        Test.startTest();
+        OrderNetAmountService.calculateNetAmount(new List<Order>{testOrder});
         Test.stopTest();
 
+        // Récupérer les commandes mises à jour
+        Order updatedOrder = [SELECT Id, NetAmount__c FROM Order WHERE Id = :testOrder.Id];
         
-        testOrder.ShipmentCost__c = 50;
-        update testOrder;
-
-     
-        Decimal expectedRevenue = (testOrderItem1.Quantity * testOrderItem1.UnitPrice);
-        Decimal expectedNetAmount = expectedRevenue - testOrder.ShipmentCost__c;
-
-        Order updatedOrder = [SELECT Id, NetAmount__c, ShipmentCost__c, TotalAmount FROM Order WHERE Id = :testOrder.Id LIMIT 1];
-        System.assertEquals(expectedNetAmount, updatedOrder.NetAmount__c, 'The NetAmount should be updated correctly.');
+        // Vérifier que les montants nets sont corrects
+        System.assertEquals(80, updatedOrder.NetAmount__c, 'Le montant net calculé est incorrect.');
     }
-
-
-
 }
