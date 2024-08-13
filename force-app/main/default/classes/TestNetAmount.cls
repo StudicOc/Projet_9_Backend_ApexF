@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 08-12-2024
+ * @last modified on  : 08-13-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 @isTest
@@ -18,7 +18,12 @@ private class TestNetAmount {
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);
 
         // Créer un OrderItem et l'ajouter à l'Order
-        OrderItem testOrderItem = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
+        OrderItem testOrderItem = TestDataFactory.createOrderItem( testProduct.Id, testPriceBookEntry.Id, 10, 150, testOrder.Id);
+        
+        // Ensure that the OrderItem was created and committed to the database
+        testOrderItem = [SELECT Id, OrderId FROM OrderItem WHERE Id = :testOrderItem.Id];
+        System.assertNotEquals(null, testOrderItem, 'OrderItem should be created.');
+
         System.debug('OrderItem created: ' + testOrderItem);
 
         // Récupérer l'Order pour vérifier que le TotalAmount est mis à jour
