@@ -8,6 +8,7 @@
         <members>TestDataFactory</members>
         <members>UpdateAccounts</members>
         <members>TestUpdateAccountCA</members>
+        <members>TestNetAmount</members>
         <name>ApexClass</name>
     </types>
     <types>
