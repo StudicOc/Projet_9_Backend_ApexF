@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>AccountCAService</members>
         <members>MyTeamOrdersController</members>
+        <members>OrderNetAmountService</members>
+        <members>TestCreationSOObject</members>
+        <members>TestDataFactory</members>
+        <members>TestNetAmount</members>
         <members>UpdateAccounts</members>
-        <members>TestUpdateAccountCA</members>
+        <members>testUpdateAccountCA</members>
         <name>ApexClass</name>
     </types>
     <types>
