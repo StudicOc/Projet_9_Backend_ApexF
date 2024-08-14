@@ -6,9 +6,8 @@
         <members>OrderNetAmountService</members>
         <members>TestCreationSOObject</members>
         <members>TestDataFactory</members>
-        <members>TestNetAmount</members>
         <members>UpdateAccounts</members>
-        <members>testUpdateAccountCA</members>
+        <members>TestUpdateAccountCA</members>
         <name>ApexClass</name>
     </types>
     <types>
