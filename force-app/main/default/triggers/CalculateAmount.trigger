@@ -6,7 +6,7 @@
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 trigger CalculateAmount on Order (before update) {
-    if (Trigger.isAfter && Trigger.isUpdate) {
+    if (Trigger.isBefore && Trigger.isUpdate) {
           // Appeler la méthode calculateNetAmount de OrderNetAmountService
         OrderNetAmountService.calculateNetAmount(Trigger.new);
     }

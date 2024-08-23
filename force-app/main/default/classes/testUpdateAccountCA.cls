@@ -46,4 +46,17 @@ private class TestUpdateAccountCA {
         // ASSERT : Vérifier que le revenu du compte est mis à jour correctement
         System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c, 'The account revenue should be updated correctly.');
     }
+
+   @isTest static void testAccountMultipleOrders() {
+
+    // Créer un compte avec plusieurs commandes
+    Account testAccountOrd = TestDataFactory.createAccountWithMultipleOrders(200);
+
+    // Récupérer la liste de orders
+    List<Order> orders = [SELECT Id, AccountId, TotalAmount FROM Order WHERE AccountId = :testAccountOrd.Id];
+    System.debug('Orders for account: ' + orders);
+    AccountCAService.processOrdersUpdateAccount(orders);
+          
 }
+   }
+

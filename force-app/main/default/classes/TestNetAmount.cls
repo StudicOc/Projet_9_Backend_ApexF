@@ -18,10 +18,11 @@ private class TestNetAmount {
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);
         OrderItem testOrderItem1 = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
         
-         // Créer un OrderItem et l'ajouter à l'Order
-        OrderItem testOrderItem = TestDataFactory.createOrderItem( testProduct.Id, testPriceBookEntry.Id, 10, 150, testOrder.Id);
+         // Création d'un OrderItem et l'ajouter à l'Order
+       OrderItem testOrderItem = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
+
         
-        // Ensure that the OrderItem was created and committed to the database
+        // Vérification de la BDD
         testOrderItem = [SELECT Id, OrderId FROM OrderItem WHERE Id = :testOrderItem.Id];
         System.assertNotEquals(null, testOrderItem, 'OrderItem should be created.');
 
@@ -37,7 +38,7 @@ private class TestNetAmount {
 
         Test.startTest();
 
-        // Étape 3 : Activer la commande pour déclencher le calcul de NetAmount__c
+        // Étape 3 :Chnager le statut à Ordered pour déclencher le calcul de NetAmount__c
         testOrder.Status = 'Ordered';
         update testOrder;
 
@@ -53,7 +54,7 @@ private class TestNetAmount {
 
         System.assertEquals(expectedNetAmount, updatedOrder.NetAmount__c, 'The NetAmount should be updated correctly.');
 
-        // Test supplémentaire : Vérifier le comportement lorsque ShipmentCost__c est null
+        // ShipmentCost__c est null
         testOrder.ShipmentCost__c = null;
         update testOrder;
 
