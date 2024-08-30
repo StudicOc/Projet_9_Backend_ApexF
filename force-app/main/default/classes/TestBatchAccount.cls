@@ -23,7 +23,7 @@ private class TestBatchAccount {
         Id batchId = Database.executeBatch(batch, 200);
         Test.stopTest();
 
-        // Vérification des compte
+        // Vérification des comptes
         Account updatedAccount1 = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :account1.Id];
         Account updatedAccount2 = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :account2.Id];
 
