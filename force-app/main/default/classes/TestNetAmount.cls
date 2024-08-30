@@ -61,4 +61,14 @@ private class TestNetAmount {
         System.assertEquals(updatedOrderWithoutShipmentCost.TotalAmount, updatedOrderWithoutShipmentCost.NetAmount__c, 'NetAmount should equal TotalAmount when ShipmentCost__c is null.');
 
     }
+
+    @isTest
+    static void testCalculateNetAmountWithNullList() {
+    Test.startTest();
+    // Appel de la méthode avec une liste nulle
+    OrderNetAmountService.calculateNetAmount(null);
+    Test.stopTest();
+    System.debug('Test passed for null list.');
+}
+
 }

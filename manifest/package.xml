@@ -10,6 +10,7 @@
         <members>TestUpdateAccountCA</members>
         <members>TestNetAmount</members>
         <members>TestControllersOrders</members>
+        <members>TestBatchAccount</members>
         <name>ApexClass</name>
     </types>
     <types>

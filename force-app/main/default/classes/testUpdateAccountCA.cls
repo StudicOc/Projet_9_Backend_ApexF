@@ -98,5 +98,29 @@ private class TestUpdateAccountCA {
     System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c, 'check');
 }
 
-   }
+
+
+@isTest
+static void testEmptyOrderList() {
+    Test.startTest();
+    
+    // Création d' une liste vide d'ordres
+    List<Order> emptyOrderList = new List<Order>();
+    
+    // Appel de la méthode avec une liste vide
+    AccountCAService.processOrdersUpdateAccount(emptyOrderList);
+    
+    Test.stopTest();
+    
+    // Aucune mis a jour
+    List<Account> updatedAccounts = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id IN (SELECT AccountId FROM Order)];
+
+    //ASSERT
+    System.assertEquals(0, updatedAccounts.size(), 'No accounts should have been updated.');
+    
+    System.debug('Test passed for empty order list.');
+}
+
+}
+   
 
