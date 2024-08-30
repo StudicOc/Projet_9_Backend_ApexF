@@ -19,7 +19,7 @@
 private class TestCreationSOObject {
 
     @isTest
-    static void myUnitTest() {
+    static void testObjectCreate() {
           
         Account testAccount = TestDataFactory.createAccount(' Account Sab');
         Product2 testProduct = TestDataFactory.createProduct2(' Product 1');

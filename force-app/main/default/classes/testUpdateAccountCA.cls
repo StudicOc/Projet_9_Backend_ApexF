@@ -8,7 +8,7 @@
 @isTest
 private class TestUpdateAccountCA {
 
-    @isTest static void test() {
+    @isTest static void testUpdateOrder() {
       
         // Créer des données de test
         Account testAccount = TestDataFactory.createAccount('Account 1');
@@ -47,16 +47,56 @@ private class TestUpdateAccountCA {
         System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c, 'The account revenue should be updated correctly.');
     }
 
-   @isTest static void testAccountMultipleOrders() {
-
+ @isTest static void testAccountMultipleOrders() {
     // Créer un compte avec plusieurs commandes
     Account testAccountOrd = TestDataFactory.createAccountWithMultipleOrders(200);
 
-    // Récupérer la liste de orders
+    // Récupérer les commandes créées
     List<Order> orders = [SELECT Id, AccountId, TotalAmount FROM Order WHERE AccountId = :testAccountOrd.Id];
+
+    // Créer un produit et une entrée de pricebook pour les commandes
+    Product2 testProduct = TestDataFactory.createProduct2('Test Product');
+    PricebookEntry testPricebookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);
+
+    // Ajouter un OrderItem à chaque commande et mettre à jour le statut en 'Ordered'
+    List<OrderItem> orderItemsToInsert = new List<OrderItem>();
+    for (Order ord : orders) {
+        ord.Status = 'Ordered';  // Mise à jour du statut de la commande en 'Ordered'
+        OrderItem oi = new OrderItem(
+            OrderId = ord.Id,
+            PricebookEntryId = testPricebookEntry.Id,
+            Quantity = 1,
+            UnitPrice = 100
+        );
+        orderItemsToInsert.add(oi);
+    }
+    // Insérer les OrderItems
+    insert orderItemsToInsert;
+
+     Test.startTest();
+    // Mettre à jour les commandes après avoir inséré les OrderItems
+    update orders;
+
+    // Re-fetch la liste des commandes mises à jour pour s'assurer que toutes les données sont cohérentes
+    orders = [SELECT Id, AccountId, TotalAmount FROM Order WHERE AccountId = :testAccountOrd.Id];
     System.debug('Orders for account: ' + orders);
+
+    // Traiter les commandes et mettre à jour le compte
     AccountCAService.processOrdersUpdateAccount(orders);
-          
+
+      Test.stopTest();
+    // Récupérer le compte mis à jour
+    Account updatedAccount = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccountOrd.Id LIMIT 1];
+
+    // Calculer le revenu attendu
+    Decimal expectedRevenue = 0;
+    for (Order ord : orders) {
+        expectedRevenue += ord.TotalAmount;
+    }
+
+    // ASSERT
+    System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c, 'check');
 }
+
    }
 

@@ -10,16 +10,15 @@
 private class TestNetAmount {
 
     @isTest
-    static void myUnitTest() {
-      
+    static void testOrderNetAmount() {
+        
+        //Création de donnée
         Account testAccount = TestDataFactory.createAccount('Account 1');
         Product2 testProduct = TestDataFactory.createProduct2('Produit 1');
         PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);   
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);
         OrderItem testOrderItem1 = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
-        
-         // Création d'un OrderItem et l'ajouter à l'Order
-       OrderItem testOrderItem = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
+        OrderItem testOrderItem = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
 
         
         // Vérification de la BDD

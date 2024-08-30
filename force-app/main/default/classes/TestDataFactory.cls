@@ -72,6 +72,22 @@ public with sharing class TestDataFactory {
         return testOrder;
     }
 
+
+    //Méthode specifique pour le batch 
+
+      public static Order createOrder2(Id accountId) {
+        Order testOrder = new Order(
+            Name = 'Test Order',
+            AccountId = accountId,
+            Status = 'Draft',
+            Pricebook2Id = Test.getStandardPricebookId(),
+            EffectiveDate = Date.today()
+        );
+        insert testOrder;
+        System.debug('Order ID: ' + testOrder.Id);
+        return testOrder;
+    }
+
     // Méthode pour créer un article de commande
     public static OrderItem createOrderItem(Id orderId, Id pricebookEntryId, Integer quantity, Decimal unitPrice) {
         OrderItem orderItem = new OrderItem(

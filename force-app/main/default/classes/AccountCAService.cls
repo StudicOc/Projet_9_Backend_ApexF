@@ -7,6 +7,7 @@
 **/
 public with sharing class AccountCAService {
     public static void processOrdersUpdateAccount(List<Order> orders) {
+        
         System.debug('Start of processOrdersUpdateAccount');
         Set<Id> accountIds = new Set<Id>();
         
