@@ -12,7 +12,6 @@ private class TestUpdateAccountCA {
       
         // Créer des données de test
         Account testAccount = TestDataFactory.createAccount('Account 1');
-        //Contract testContract = TestDataFactory.createContract(testAccount.Id);
         Product2 testProduct = TestDataFactory.createProduct2('Produit 1');
         PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);

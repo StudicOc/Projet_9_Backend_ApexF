@@ -13,12 +13,13 @@ private class TestControllersOrders {
         OrderItem testOrderItem1 = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 100, 250);
         OrderItem testOrderItem = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 100, 250);
 
-        // Mise à jour du statut de la commande pour qu'elle corresponde à la requête dans le contrôleur
+        // Mise à jour du statut de la commande 
         testOrder.Status = 'Ordered';
+        Test.startTest();
         update testOrder;
 
         // 2 - Initialisation du contrôleur et appel de la propriété
-        Test.startTest();
+       
         MyTeamOrdersController controller = new MyTeamOrdersController();
         Decimal total = controller.SumOders;  // Utilisation de la propriété
         Test.stopTest();
