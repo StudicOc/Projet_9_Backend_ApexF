@@ -10,7 +10,7 @@ private class TestUpdateAccountCA {
 
     @isTest static void testUpdateOrder() {
       
-        // Créer des données
+        // Créer des donnée
         Account testAccount = TestDataFactory.createAccount('Account 1');
         Product2 testProduct = TestDataFactory.createProduct2('Produit 1');
         PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);
