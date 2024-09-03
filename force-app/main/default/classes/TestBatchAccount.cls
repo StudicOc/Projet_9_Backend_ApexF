@@ -41,14 +41,14 @@ private class TestBatchAccount {
         Account updatedAccount2 = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :account2.Id];
 
         // Calcul de nos ORDERITEM
-        Decimal expectedValue1 = 10 * 150; // Totale pour testOrderItem1
+        Decimal expectedValue1 = 10 * 150; // Total pour testOrderItem1
         Decimal expectedValue2 = 10 * 150; // Total pour testOrderItem2
 
         // Assert
         System.assertEquals(expectedValue1, updatedAccount1.Chiffre_d_affaire__c, 
-            'Le champ Chiffre_d_affaire__c du compte 1 n\'a pas la valeur attendue après l\'exécution du batch.');
+            'Le champ Chiffre_d_affaire__c du compte 1 après l\'exécution du batch est à jour.');
 
         System.assertEquals(expectedValue2, updatedAccount2.Chiffre_d_affaire__c, 
-            'Le champ Chiffre_d_affaire__c du compte 2 n\'a pas la valeur attendue après l\'exécution du batch.');
+            'Le champ Chiffre_d_affaire__c du compte 2 après l\'exécution du batch est à jour.');
     }
 }
