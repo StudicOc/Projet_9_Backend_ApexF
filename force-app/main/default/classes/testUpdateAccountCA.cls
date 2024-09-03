@@ -76,7 +76,7 @@ private class TestUpdateAccountCA {
     // Mettre à jour les commandes après avoir inséré les OrderItems
     update orders;
 
-    // Re-fetch la liste des commandes mises à jour pour s'assurer que toutes les données sont cohérentes
+    // Liste des commandes mises à jour pour s'assurer que toutes les données sont cohérentes
     orders = [SELECT Id, AccountId, TotalAmount FROM Order WHERE AccountId = :testAccountOrd.Id];
     System.debug('Orders for account: ' + orders);
 
@@ -116,9 +116,8 @@ static void testEmptyOrderList() {
     List<Account> updatedAccounts = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id IN (SELECT AccountId FROM Order)];
 
     //ASSERT
-    System.assertEquals(0, updatedAccounts.size(), 'No accounts should have been updated.');
-    
-    System.debug('Test passed for empty order list.');
+    System.assertEquals(0, updatedAccounts.size(), 'Aucun compte à jour');
+    System.debug('Le test passe avec une liste Vide');
 }
 
 }
