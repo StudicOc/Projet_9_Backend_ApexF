@@ -10,7 +10,7 @@ private class TestUpdateAccountCA {
 
     @isTest static void testUpdateOrder() {
       
-        // Créer des données de test
+        // Créer des données
         Account testAccount = TestDataFactory.createAccount('Account 1');
         Product2 testProduct = TestDataFactory.createProduct2('Produit 1');
         PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);
@@ -101,9 +101,10 @@ private class TestUpdateAccountCA {
 
 @isTest
 static void testEmptyOrderList() {
+    
     Test.startTest();
     
-    // Création d' une liste vide d'ordres
+    // Création d'une liste vide d'ordres
     List<Order> emptyOrderList = new List<Order>();
     
     // Appel de la méthode avec une liste vide

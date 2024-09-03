@@ -15,6 +15,7 @@ private class TestControllersOrders {
 
         // Mise à jour du statut de la commande 
         testOrder.Status = 'Ordered';
+        // Utilisation des limites du gouverneur
         Test.startTest();
         update testOrder;
 

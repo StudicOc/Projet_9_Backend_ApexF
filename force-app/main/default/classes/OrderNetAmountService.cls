@@ -23,6 +23,6 @@ public with sharing class OrderNetAmountService {
             }
         }
 
-        System.debug('Orders processed: ' + orders);
+        System.debug('Commandes traitées : ' + orders);
     }
 }

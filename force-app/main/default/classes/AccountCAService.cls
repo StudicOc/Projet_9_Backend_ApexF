@@ -7,26 +7,24 @@
 **/
 public with sharing class AccountCAService {
     public static void processOrdersUpdateAccount(List<Order> orders) {
-        
-        System.debug('Start of processOrdersUpdateAccount');
+        // ETAPE 1 ---Initialisation d'un SET pour collecter les ID d'Accounts associés aux orders ----//
         Set<Id> accountIds = new Set<Id>();
-        
-        // Collecte les identifiants de compte des commandes associées
+        // ETAPE 2---Parcourir  la Liste des orders---//
         for (Order ord : orders) {
             if (ord.AccountId != null) {
                 accountIds.add(ord.AccountId);
             }
         }
-        System.debug('Collected account IDs: ' + accountIds);
+        System.debug('Identifiants de compte collectés : ' + accountIds);
         
         if (accountIds.isEmpty()) {
-            System.debug('No account IDs found, exiting method.');
+            System.debug('Aucun identifiant de compte trouvé');
             return;
         }
-        
+       
+        //------- ETAPE 3 : Calcul du CA par Account-------//
         Map<Id, Decimal> accountAmount = new Map<Id, Decimal>();
-
-        // Calcule du revenu total de chaque compte
+        //Requête SOQL Agrégée//
         for (AggregateResult ordersSum : [
             SELECT AccountId, SUM(TotalAmount) totalRevenue 
             FROM Order
@@ -35,24 +33,23 @@ public with sharing class AccountCAService {
         ]) {
             accountAmount.put((Id)ordersSum.get('AccountId'), (Decimal)ordersSum.get('totalRevenue'));
         }
-        System.debug('Account revenue calculated: ' + accountAmount);
+        System.debug('Revenus du compte calculés :' + accountAmount);
 
-        // Liste des comptes à mettre à jour
+        //------ETAPE 4: Création de la Liste des Accounts à Mettre à Jour-----//
         List<Account> accountsToUpdate = new List<Account>();
         for (Id accountId : accountAmount.keySet()) {
             Account acc = new Account(Id = accountId);
             acc.Chiffre_d_affaire__c = accountAmount.get(accountId);
             accountsToUpdate.add(acc);
         }
-        System.debug('Accounts to update: ' + accountsToUpdate);
-        
+        System.debug('Comptes à mettre à jour :' + accountsToUpdate);
         // Update dans la BDD
         if (!accountsToUpdate.isEmpty()) {
             update accountsToUpdate;
-            System.debug('Accounts updated successfully.');
+            System.debug('Comptes mis à jour avec succès.');
         } else {
-            System.debug('No accounts to update.');
+            System.debug('Aucun compte à mettre à jour.');
         }
-        System.debug('End of processOrdersUpdateAccount');
+        System.debug('Fin du processusOrdersUpdateAccount');
     }
 }

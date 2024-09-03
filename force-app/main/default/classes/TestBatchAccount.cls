@@ -41,8 +41,8 @@ private class TestBatchAccount {
         Account updatedAccount2 = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :account2.Id];
 
         // Calcul de nos ORDERITEM
-        Decimal expectedValue1 = 10 * 150; // Total for testOrderItem1
-        Decimal expectedValue2 = 10 * 150; // Total for testOrderItem2
+        Decimal expectedValue1 = 10 * 150; // Totale pour testOrderItem1
+        Decimal expectedValue2 = 10 * 150; // Total pour testOrderItem2
 
         // Assert
         System.assertEquals(expectedValue1, updatedAccount1.Chiffre_d_affaire__c, 

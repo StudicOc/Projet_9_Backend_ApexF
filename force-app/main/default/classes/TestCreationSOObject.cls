@@ -20,6 +20,8 @@ private class TestCreationSOObject {
 
     @isTest
     static void testObjectCreate() {
+
+        // Création des données
           
         Account testAccount = TestDataFactory.createAccount(' Account Sab');
         Product2 testProduct = TestDataFactory.createProduct2(' Product 1');
@@ -27,7 +29,10 @@ private class TestCreationSOObject {
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);
         OrderItem testOrderItem = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
 
-    System.debug('OrderItem created with ID: ' + testOrderItem.Id);
-    System.assertNotEquals(null, testOrderItem.Id, 'OrderItem succes.');
+        // Vérification du debug
+       System.debug('OrderItem created with ID: ' + testOrderItem.Id);
+
+       // ASSERT
+       System.assertNotEquals(null, testOrderItem.Id, 'OrderItem succes.');
     }
 }

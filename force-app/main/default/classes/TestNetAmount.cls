@@ -12,7 +12,7 @@ private class TestNetAmount {
     @isTest
     static void testOrderNetAmount() {
         
-        //Création de donnée
+        //Création des données
         Account testAccount = TestDataFactory.createAccount('Account 1');
         Product2 testProduct = TestDataFactory.createProduct2('Produit 1');
         PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);   
