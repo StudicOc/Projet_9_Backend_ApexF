@@ -11,6 +11,7 @@
         <members>TestNetAmount</members>
         <members>TestControllersOrders</members>
         <members>TestBatchAccount</members>
+        <members>OrderTriggers</members>
         <name>ApexClass</name>
     </types>
     <types>

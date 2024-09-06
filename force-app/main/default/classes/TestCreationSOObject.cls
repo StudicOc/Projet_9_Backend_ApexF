@@ -29,9 +29,6 @@ private class TestCreationSOObject {
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);
         OrderItem testOrderItem = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
 
-        // Vérification du debug
-       System.debug('OrderItem created with ID: ' + testOrderItem.Id);
-
        // ASSERT
        System.assertNotEquals(null, testOrderItem.Id, 'OrderItem succes.');
     }

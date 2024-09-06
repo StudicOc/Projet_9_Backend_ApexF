@@ -21,10 +21,8 @@ private class TestUpdateAccountCA {
         // Vérifier l'état initial
         Account initialAccount = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount.Id LIMIT 1];
         System.assertEquals(null, initialAccount.Chiffre_d_affaire__c, 'Initial account revenue should be null.');
-
-        Test.startTest();
-
-        // Mettre à jour le statut de la commande
+   
+        Test.startTest(); 
         testOrder.Status = 'Ordered';
         update testOrder;
 
@@ -39,9 +37,6 @@ private class TestUpdateAccountCA {
 
         // Requêter l'Account
         Account updatedAccount = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount.Id LIMIT 1];
-
-        System.debug('Updated Account ID: ' + updatedAccount.Id);
-        System.debug('Actual NetAmount__c: ' + updatedAccount.Chiffre_d_affaire__c);
         // ASSERT : Vérifier que le revenu du compte est mis à jour correctement
         System.assertEquals(expectedRevenue, updatedAccount.Chiffre_d_affaire__c, 'The account revenue should be updated correctly.');
     }

@@ -7,7 +7,11 @@
  * 
 **/
 
-                      // TESTDATAFACTORY //           
+// TESTDATAFACTORY //        
+                      
+ //Aucune dépendance sur vos données spécifiques de votre organisation
+  //Encapsulation de la logique de création de données de test réutilisables
+
 public with sharing class TestDataFactory {
 
     // Méthode pour créer un compte

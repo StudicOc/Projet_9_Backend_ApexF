@@ -7,20 +7,12 @@ private class TestBatchAccount {
         // Création des données 
         Account account1 = TestDataFactory.createAccount('Account1');
         Account account2 = TestDataFactory.createAccount('Account2');
-
-     
         Product2 product1 = TestDataFactory.createProduct2('Product 1');
         Product2 product2 = TestDataFactory.createProduct2('Product 2');
-
- 
         PricebookEntry pbe1 = TestDataFactory.createPricebookEntry(product1.Id);
         PricebookEntry pbe2 = TestDataFactory.createPricebookEntry(product2.Id);
-
-     
         Order testOrder1 = TestDataFactory.createOrder(account1.Id);
         Order testOrder2 = TestDataFactory.createOrder(account2.Id);
-
-      
         OrderItem testOrderItem1 = TestDataFactory.createOrderItem(testOrder1.Id, pbe1.Id, 10, 150);
         OrderItem testOrderItem2 = TestDataFactory.createOrderItem(testOrder2.Id, pbe2.Id, 10, 150);
 
