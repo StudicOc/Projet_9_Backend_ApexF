@@ -22,14 +22,12 @@ private class TestCreationSOObject {
     static void testObjectCreate() {
 
         // Création des données
-          
         Account testAccount = TestDataFactory.createAccount(' Account Sab');
         Product2 testProduct = TestDataFactory.createProduct2(' Product 1');
         PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);
         OrderItem testOrderItem = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
-
-       // ASSERT
+         // ASSERT
        System.assertNotEquals(null, testOrderItem.Id, 'OrderItem succes.');
     }
 }

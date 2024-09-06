@@ -5,7 +5,6 @@ private class TestControllersOrders {
     static void testSumOrders() {
        
         // 1 - Création des données de test
-      
         Account testAccount = TestDataFactory.createAccount('Account 1');
         Product2 testProduct = TestDataFactory.createProduct2('Produit 1');
         PricebookEntry testPriceBookEntry = TestDataFactory.createPricebookEntry(testProduct.Id);   
@@ -15,12 +14,10 @@ private class TestControllersOrders {
 
         // Mise à jour du statut de la commande 
         testOrder.Status = 'Ordered';
-        // Utilisation des limites du gouverneur
         Test.startTest();
         update testOrder;
 
         // 2 - Initialisation du contrôleur et appel de la propriété
-       
         MyTeamOrdersController controller = new MyTeamOrdersController();
         Decimal total = controller.SumOders;  // Utilisation de la propriété
         Test.stopTest();
