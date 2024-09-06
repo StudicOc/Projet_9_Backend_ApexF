@@ -16,45 +16,29 @@ public with sharing class AccountCAService {
                 accountIds.add(ord.AccountId);
             }
         }
-        System.debug('Identifiants de compte collectés : ' + accountIds);
-        
-        if (accountIds.isEmpty()) {
-            System.debug('Aucun identifiant de compte trouvé');
-            return;
-        }
-       
         //------- ETAPE 3 : Calcul du CA par Account-------//
-        // Création de notre Map pour stocker le revenu total de chaque account // 
         Map<Id, Decimal> accountAmount = new Map<Id, Decimal>();
-        
-        //Requête SOQL Agrégée//
         for (AggregateResult ordersSum : [
             SELECT AccountId, SUM(TotalAmount) totalRevenue 
             FROM Order
             WHERE Status = 'Ordered' AND AccountId IN :accountIds
             GROUP BY AccountId
         ]) {
-            // Associer chaque compte à son chiffre d'affaires 
             accountAmount.put((Id)ordersSum.get('AccountId'), (Decimal)ordersSum.get('totalRevenue'));
         }
-        System.debug('Revenus du compte calculés :' + accountAmount);
 
         //------ETAPE 4: Création de la Liste des Accounts à Mettre à Jour-----//
         List<Account> accountsToUpdate = new List<Account>();
-        for (Id accountId : accountAmount.keySet()) { // Récupération de tous les accountId
-            Account acc = new Account(Id = accountId);
+        for (Id accountId : accountAmount.keySet()) { 
             acc.Chiffre_d_affaire__c = accountAmount.get(accountId);
-            accountsToUpdate.add(acc); // Ajoutons l'account mis à jour dans la liste accountsToUpdate
+            accountsToUpdate.add(acc); 
         }
-        System.debug('Comptes à mettre à jour :' + accountsToUpdate);
-        //Vérification
+   
         // Update dans la BDD
         if (!accountsToUpdate.isEmpty()) {
             update accountsToUpdate;
-            System.debug('Comptes mis à jour avec succès.');
         } else {
             System.debug('Aucun compte à mettre à jour.');
         }
-        System.debug('Fin du processusOrdersUpdateAccount');
     }
 }
