@@ -8,10 +8,8 @@
 
 @isTest
 private class TestNetAmount {
-
     @isTest
     static void testOrderNetAmount() {
-        
         //Création des données
         Account testAccount = TestDataFactory.createAccount('Account 1');
         Product2 testProduct = TestDataFactory.createProduct2('Produit 1');
@@ -38,12 +36,10 @@ private class TestNetAmount {
         // ShipmentCost__c est null
         testOrder.ShipmentCost__c = null;
         update testOrder;
-
         Order updatedOrderWithoutShipmentCost = [SELECT Id, NetAmount__c, TotalAmount FROM Order WHERE Id = :testOrder.Id];
         System.assertEquals(updatedOrderWithoutShipmentCost.TotalAmount, updatedOrderWithoutShipmentCost.NetAmount__c, 'NetAmount should equal TotalAmount when ShipmentCost__c is null.');
 
     }
-
     @isTest
     static void testCalculateNetAmountWithNullList() {
     Test.startTest();
