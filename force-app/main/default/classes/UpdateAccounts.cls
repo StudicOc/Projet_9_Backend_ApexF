@@ -22,7 +22,6 @@ global class UpdateAccounts implements Database.Batchable<sObject>{
         for (Account acc : scope) {
             orders.addAll(acc.Orders);
         }
-        System.debug('Number of Orders to process: ' + orders.size());
         AccountCAService.processOrdersUpdateAccount(orders);
     }    
     global void finish(Database.BatchableContext info){

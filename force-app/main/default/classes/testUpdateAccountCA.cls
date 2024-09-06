@@ -17,7 +17,6 @@ private class TestUpdateAccountCA {
         Order testOrder = TestDataFactory.createOrder(testAccount.Id);
         OrderItem testOrderItem1 = TestDataFactory.createOrderItem(testOrder.Id, testPriceBookEntry.Id, 10, 150);
      
-
         // Vérifier l'état initial
         Account initialAccount = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount.Id LIMIT 1];
         System.assertEquals(null, initialAccount.Chiffre_d_affaire__c, 'Initial account revenue should be null.');
