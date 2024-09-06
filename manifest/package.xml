@@ -11,7 +11,6 @@
         <members>TestNetAmount</members>
         <members>TestControllersOrders</members>
         <members>TestBatchAccount</members>
-        <members>OrderTriggers</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -19,8 +18,7 @@
         <name>ApexPage</name>
     </types>
     <types>
-        <members>CalculateAmount</members>
-        <members>UpdateAccountCA</members>
+        <members>OrderTrigger</members>
         <name>ApexTrigger</name>
     </types>
     <types>
